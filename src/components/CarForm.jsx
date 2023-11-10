@@ -3,8 +3,12 @@ import { changeName, changeCost, addCar } from '../store';
 
 function CarForm() {
     const dispatch = useDispatch();
-    const carName = useSelector((state) => state.form.name);
-    const carCost = useSelector((state) => state.form.cost);
+    const { carName, carCost } = useSelector((state) => {
+        return {
+            carName: state.form.name,
+            carCost: state.form.cost,
+        };
+    });
     const handleSubmit = (e) => {
         e.preventDefault();
         dispatch(
@@ -14,8 +18,8 @@ function CarForm() {
                 cost: carCost,
             })
         );
-        dispatch(changeName(''));
-        dispatch(changeCost(''));
+        // dispatch(changeName(''));
+        // dispatch(changeCost(0));
     };
 
     return (
@@ -36,7 +40,7 @@ function CarForm() {
                     <input
                         type="number"
                         name="value"
-                        value={carCost}
+                        value={carCost || ''}
                         onChange={(e) => dispatch(changeCost(Number(e.target.value)))}
                         className="border border-black"
                     />
